@@ -18,7 +18,7 @@ module Devise
       # strategy handle the authentication.
       def authenticate!
         cookie = remember_cookie # sets the instance variable
-        if Devise::VERSION.starts_with?('3') && cookie.length > 2
+        if cookie.length > 2
           # safe, on this version we only care about the first two values
           cookie = cookie[0..1]
         end
