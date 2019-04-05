@@ -17,12 +17,12 @@ module Devise
       # the record in the database. If the attempt fails, we pass to another
       # strategy handle the authentication.
       def authenticate!
-        remember_cookie # sets the instance variable
-        if @remember_cookie.length > 2
+        cookie = remember_cookie # sets the instance variable
+        if Devise::VERSION.starts_with?('3') && cookie.length > 2
           # safe, on this version we only care about the first two values
-          @remember_cookie = @remember_cookie[0..1]
+          cookie = cookie[0..1]
         end
-        resource = mapping.to.serialize_from_cookie(*@remember_cookie)
+        resource = mapping.to.serialize_from_cookie(*cookie)
 
         unless resource
           cookies.delete(remember_key)
